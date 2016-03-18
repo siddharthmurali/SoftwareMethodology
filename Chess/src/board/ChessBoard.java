@@ -1,5 +1,6 @@
 package board;
 import pieces.*;
+
 import pieces.BishopPiece;
 import pieces.KingPiece;
 import pieces.KnightPiece;
@@ -13,6 +14,7 @@ public class ChessBoard {
 	public static final int rank = 8;
 	public static final int file = 8;
 	public BoardSquares[][] board;
+	public boolean isBlackTurn = true;
 	
 	public ChessBoard(){
 		
@@ -93,6 +95,10 @@ public class ChessBoard {
 		str += " a  b  c  d  e  f  g  h\n";
 
 		return str;
+	}
+	
+	public boolean getBlackTurn(){
+		return !isBlackTurn;
 	}
 
 }
