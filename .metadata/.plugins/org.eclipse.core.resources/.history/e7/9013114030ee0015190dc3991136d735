@@ -1,0 +1,79 @@
+package util;
+
+public class Coordinates {
+	
+	public int fileC;
+	public int rankC;
+	
+	public Coordinates(char file, char rank){
+		
+		int fileNUM = getFile(file);
+		int rankNUM = getRank(rank);
+		
+		if(file > 7 || file < 0){
+			//throw error;
+		}
+		if(rank > 7 || rank < 0){
+			//throw error;
+		}
+		
+		this.fileC = fileNUM;
+		this.rankC = rankNUM;
+		
+	}
+	
+	public Coordinates(int file, int rank){
+		
+		this.fileC = file;
+		this.rankC = rank;
+	}
+	
+	public int getFile(char file){
+		switch(file){
+			case 'a': return 1;
+			case 'b': return 2;
+			case 'c': return 3;
+			case 'd': return 4;
+			case 'e': return 5;
+			case 'f': return 6;
+			case 'g': return 7;
+		}
+		return -1;	
+	}
+	
+	public int getRank(char rank){
+		return Character.getNumericValue(rank)-1;
+		
+	}
+
+	public boolean isDiagonalTo(Coordinates coor) {
+		if (this.equals(coor)) {
+			return false;
+		} else {
+			int slope = this.getSlopeTo(coor);
+
+			System.out.println("slope: " + slope);
+			
+			if (slope == 1 || slope == -1)
+				return true;
+			else
+				return false;
+		}
+	}
+	
+	public int getSlopeTo(Coordinates coor) {
+		int rankOne = this.rankC + 1;
+		int fileOne = this.fileC + 1;
+
+		int rankTwo = coor.rankC + 1;
+		int fileTwo = coor.fileC + 1;
+
+		int denominator = fileOne - fileTwo;
+		
+		if (denominator != 0)
+			return (rankOne - rankTwo) / denominator;
+		else
+			return 0;
+	}
+	
+}

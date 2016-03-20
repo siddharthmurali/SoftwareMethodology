@@ -1,6 +1,7 @@
 package Controller;
 
 import board.*;
+import util.Coordinates;
 
 /**
  * @author Siddharth Murali
@@ -22,9 +23,23 @@ public class Controller {
 		endGame = true;
 	}
 	
-	public void move(char fileOne, char rankOne, char fileTwo, char rankTwo, String extra){
+	public void move(char fileOne, char rankOne, char fileTwo, char rankTwo, String toPromote){
+		Coordinates firstCoor;
+		Coordinates secondCoor;
 		
+		if(toPromote != null){
+			if(toPromote != "R" || toPromote != "B" || toPromote != "Q" || toPromote != "N"){
+				System.out.println("Invalid promotion");
+			}
+		}
+		firstCoor = new Coordinates(fileOne, rankOne);
+		secondCoor = new Coordinates(fileTwo, rankTwo);
+		
+		if(firstCoor != null && secondCoor != null){
+			board.movePiece(firstCoor, secondCoor, toPromote);
+		}
 	}
+	
 	public String getBoardString(){
 		return this.board.toString();
 	}

@@ -1,0 +1,39 @@
+package view;
+import Controller.*;
+import util.*;
+
+/**
+ * 
+ * @author Siddharth Murali
+ * @author Karthik Nair
+ *
+ */
+public class view {
+
+	public Controller control;
+	public boolean draw;
+	
+	public view(Controller controller){
+		this.control = controller;
+	}
+	
+	public void argument(String arg){
+		if(arg == "resign"){
+			if(this.control.blackTurn() == true){
+				System.out.println("White wins!");
+			}
+			else{
+				System.out.println("Black Wins");
+			}
+			this.control.resignGame();
+		}
+	}
+	public void printBoard(){
+		System.out.println(this.control.getBoardString());
+	}
+	
+	public void printPrompt(){
+		System.out.println(control.blackTurn() ? "Black's turn: " : "White's turn: ");
+	}
+	
+}

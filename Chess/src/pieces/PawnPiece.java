@@ -15,7 +15,7 @@ public class PawnPiece extends ChessPiece {
 	}
 	
 	public String toString(){
-		return super.toString() + "P";
+		return super.toString() + "p";
 	}
 	
 	public boolean validMove(){

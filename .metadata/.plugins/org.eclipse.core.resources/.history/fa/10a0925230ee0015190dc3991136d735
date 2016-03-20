@@ -1,0 +1,148 @@
+package board;
+import pieces.*;
+import Controller.*;
+
+
+import pieces.BishopPiece;
+import pieces.KingPiece;
+import pieces.KnightPiece;
+import pieces.PawnPiece;
+import pieces.QueenPiece;
+import pieces.RookPiece;
+import util.Coordinates;
+
+public class ChessBoard {
+	public int count = 0;
+	public static final int rank = 8;
+	public static final int file = 8;
+	public BoardSquares[][] board;
+	public boolean isBlackTurn = true;
+
+	
+	public ChessBoard(){
+		
+		board = new BoardSquares[rank][file];
+		for (int i = 0; i < board.length; i++) {
+			for (int j = 0; j < board[i].length; j++) {
+				board[i][j] = new BoardSquares(new Coordinates(i, j), null);
+				
+			}
+		}
+		
+		this.loadGameBoard();
+	
+	}
+	
+	public void loadGameBoard(){
+		
+		char color = 0;
+		
+		for(int i = 0; i < file; i++){
+			
+			for(int j = 0; j < rank; j++){
+				
+				if(i == 0 || i == 7){
+					
+					if(i == 0){
+						color = 'w';
+					}else{
+						color = 'b';
+					}
+					
+					
+					switch(j){
+					
+					case 0: board[i][j].piece = new RookPiece(color);			
+							break;
+					case 1: board[i][j].piece = new KnightPiece(color);
+							break;
+					case 2: board[i][j].piece = new BishopPiece(color);
+							break;
+					case 3: board[i][j].piece = new QueenPiece(color);
+							break;
+					case 4: board[i][j].piece = new KingPiece(color);
+							break;
+					case 5: board[i][j].piece = new BishopPiece(color);
+							break;	
+					case 6: board[i][j].piece = new KnightPiece(color);
+							break;
+					case 7: board[i][j].piece = new RookPiece(color);
+							break;
+					default: break;
+					}
+				}
+				else if(i == 1 || i == 6){
+					if(i == 1){
+						color = 'w';
+					}else{
+						color = 'b';
+					}
+					board[i][j].piece = new PawnPiece(color);
+				}
+			}
+		}
+	
+	}
+	
+	public void movePiece(Coordinates cellOne, Coordinates cellTwo, String promo){
+		BoardSquares begin = this.getFileRank(cellOne);
+		BoardSquares end = this.getFileRank(cellOne);
+		
+		ChessPiece pieceToMove = begin.piece;
+		ChessPiece pieceToKill = end.piece;
+		
+		if(begin.equals(end)){
+			System.out.println("Cannot move to same spot");
+		}
+		if(begin == null){
+			System.out.println("There is no piece to move in that cell");
+		}
+		if(pieceToMove.color == 'b' && getBlackTurn() == false){
+			System.out.println("You cannot move a black piece");
+		}
+		if(pieceToMove.color == 'w' && getBlackTurn() == true){
+			System.out.println("You cannot move a white piece");
+		}
+		if(pieceToKill.color == 'b' && getBlackTurn() == true){
+			System.out.println("You cannot kill your own piece");
+		}
+		if(pieceToKill.color == 'w' && getBlackTurn() == false){
+			System.out.println("You cannot kill your own piece");
+		}
+		this.move(cellOne, cellTwo);
+	}
+	
+	
+	public void move(Coordinates cellOne, Coordinates cellTwo){
+		
+		this.board[cellTwo.fileC][cellTwo.rankC].piece = this.board[cellOne.fileC][cellTwo.rankC].piece;
+		this.board[cellOne.fileC][cellOne.rankC].piece = null;
+		this.count++;
+		this.isBlackTurn = (count % 2 == 0);
+	}
+	
+	public String toString() {
+		String str = "";
+
+		for (int i = 0; i < board.length; i++) {
+			for (int j = 0; j < board[i].length; j++) {
+				str += this.board[i][j].toString() + " ";
+			}
+
+			str += (i + 1) + "\n";
+		}
+
+		str += " a  b  c  d  e  f  g  h\n";
+
+		return str;
+	}
+	
+	public boolean getBlackTurn(){
+		return !isBlackTurn;
+	}
+	
+	private BoardSquares getFileRank(Coordinates coor){
+		return board[coor.fileC][coor.rankC];
+	}
+
+}

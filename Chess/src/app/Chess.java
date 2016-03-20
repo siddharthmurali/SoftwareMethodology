@@ -7,6 +7,16 @@ import Controller.Controller;
 
 import java.util.*;
 
+/**
+ * 
+ * 
+ * 
+ * @author Siddharth Murali
+ * @author Karthik Nair
+ * 
+ *
+ */
+
 
 public class Chess {
 	

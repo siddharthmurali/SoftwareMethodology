@@ -17,6 +17,7 @@ public class view {
 		this.control = controller;
 	}
 	
+	@SuppressWarnings("null")
 	public void argument(String arg){
 		if(arg.equals("resign")){
 			if(this.control.blackTurn() == true){
@@ -36,6 +37,30 @@ public class view {
 				System.out.println("Draw");
 				this.control.endGame = true;
 			}
+		}
+		if(arg.length() == 5 && !arg.equals("draw?")){
+			char fileOne = arg.charAt(0);
+			char rankOne = arg.charAt(1);
+			char fileTwo = arg.charAt(3);
+			char rankTwo = arg.charAt(4);
+		
+			
+		
+			control.move(fileOne, rankOne, fileTwo, rankTwo, null);
+		
+		}
+		
+		if(arg.length() == 7){
+			char fileOne = arg.charAt(0);
+			char rankOne = arg.charAt(1);
+			char fileTwo = arg.charAt(3);
+			char rankTwo = arg.charAt(4);
+			
+			String toPromote = arg.substring(5, 6);
+			
+			
+		
+			control.move(fileOne, rankOne, fileTwo, rankTwo, toPromote);
 		}
 	}
 	
