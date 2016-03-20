@@ -125,4 +125,8 @@ public class Coordinates {
 		}
 	}
 	
+	public int distanceFrom(Coordinates coor) {
+		return (int) Math.sqrt(Math.pow((coor.fileC - this.fileC), 2)
+				- Math.pow((coor.rankC - this.rankC), 2));
+	}
 }

@@ -1,7 +1,9 @@
 package pieces;
 
+
 import java.util.ArrayList;
 
+import board.BoardSquares;
 import util.Coordinates;
 
 /**
@@ -34,6 +36,14 @@ public abstract class ChessPiece {
 
 	public ArrayList<Coordinates> deepestMovesFrom(Coordinates startAddress) {
 		return null;
+	}
+
+	public boolean MoveValid(Coordinates begin, Coordinates end, PieceBoolFalse allBools) {
+		if (begin.distanceFrom(end) <= 7) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 }

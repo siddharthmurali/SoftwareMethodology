@@ -1,0 +1,10 @@
+package util;
+
+public class BadCoordinatesException extends SomeException{
+
+	
+	public BadCoordinatesException(String message) {
+		super(message);
+	}
+	
+}

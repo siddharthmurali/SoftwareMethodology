@@ -1,0 +1,10 @@
+package util;
+
+public class BadMove extends SomeException{
+
+
+	public BadMove(String message) {
+		super(message);
+	}
+	
+}

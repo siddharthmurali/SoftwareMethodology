@@ -1,5 +1,6 @@
 package board;
 import pieces.*;
+import util.*;
 
 import java.util.ArrayList;
 
@@ -92,7 +93,7 @@ public class ChessBoard {
 
 	}
 
-	public void movePiece(Coordinates cellOne, Coordinates cellTwo, String promo){
+	public void movePiece(Coordinates cellOne, Coordinates cellTwo, String promo) throws BadMoveException{
 		BoardSquares begin = this.getFileRank(cellOne);
 		BoardSquares end = this.getFileRank(cellTwo);
 

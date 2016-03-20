@@ -33,6 +33,7 @@ public class BoardSquares {
 			return this.piece.toString();
 		}
 	}
+
 	
 
 }
