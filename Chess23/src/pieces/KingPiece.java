@@ -2,6 +2,13 @@ package pieces;
 
 import util.Coordinates;
 
+/**
+ * 
+ * @author Siddharth Murali
+ * @autor Karthik Nair
+ *
+ */
+
 public class KingPiece extends ChessPiece{
 	
 	public KingPiece(char color){

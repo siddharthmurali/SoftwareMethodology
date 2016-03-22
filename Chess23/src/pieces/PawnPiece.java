@@ -2,6 +2,12 @@ package pieces;
 import util.Coordinates;
 import board.*;
 
+/**
+ * 
+ * @author Siddharth Murali
+ * @author Karthik Nair
+ *
+ */
 public class PawnPiece extends ChessPiece {
 
 	

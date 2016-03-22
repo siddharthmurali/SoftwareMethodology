@@ -1,8 +1,17 @@
 package board;
 
 import pieces.ChessPiece;
+
+
 import util.Coordinates;
 
+/**
+ * 
+ * 
+ * @author Siddharth Murali
+ * Karthik Nair
+ *
+ */
 public class BoardSquares {
 	
 	public Coordinates curr;

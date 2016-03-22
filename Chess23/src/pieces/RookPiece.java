@@ -1,7 +1,16 @@
 package pieces;
 
 import util.Coordinates;
+
+
 import board.ChessBoard;
+
+/**
+ * 
+ * @author Siddharth Murali
+ * @author Karthik Nair
+ *
+ */
 
 public class RookPiece extends ChessPiece {
 	
