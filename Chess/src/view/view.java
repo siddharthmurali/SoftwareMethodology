@@ -18,7 +18,7 @@ public class view {
 	}
 	
 	@SuppressWarnings("null")
-	public void argument(String arg){
+	public void argument(String arg) throws Exception{
 		if(arg.equals("resign")){
 			if(this.control.blackTurn() == true){
 				System.out.println("White wins!");

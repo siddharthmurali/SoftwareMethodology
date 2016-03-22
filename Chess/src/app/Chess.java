@@ -30,7 +30,12 @@ public class Chess {
 			v.printBoard();
 			v.printPrompt();
 			String arg = scan.nextLine();
-			v.argument(arg);
+			try {
+				v.argument(arg);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 	}

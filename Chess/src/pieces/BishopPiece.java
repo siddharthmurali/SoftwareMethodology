@@ -1,4 +1,5 @@
 package pieces;
+import util.Coordinates;
 
 public class BishopPiece extends ChessPiece{
 	
@@ -16,8 +17,17 @@ public class BishopPiece extends ChessPiece{
 		return super.toString() + "B";
 	}
 	
-	public boolean validMove(){
-		return true;
+	public boolean validMove(Coordinates start, Coordinates end, char spec, boolean path){
+		boolean validityCheck = super.validMove(start, end, spec, path);
+		
+		if(validityCheck && path == false){
+			if(start.isDiagonalTo(end)){
+				return true;
+			}
+		}
+		
+		return false;
+		
 	}
 
 }

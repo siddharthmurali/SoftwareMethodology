@@ -12,16 +12,16 @@ public class Coordinates {
 	public int fileC;
 	public int rankC;
 	
-	public Coordinates(char file, char rank){
+	public Coordinates(char file, char rank) throws Exception{
 		
 		int fileNUM = getFile(file);
 		int rankNUM = getRank(rank);
 		
-		if(file > 7 || file < 0){
-			//throw error;
+		if(fileNUM > 7 || fileNUM < 0){
+			System.out.println("Invalid File");
 		}
-		if(rank > 7 || rank < 0){
-			//throw error;
+		if(rankNUM > 7 || rank < 0){
+			System.out.println("Invalid Rank");
 		}
 		
 		this.fileC = fileNUM;
@@ -73,8 +73,7 @@ public class Coordinates {
 			return false;
 		} else {
 			int slope = this.getSlopeTo(coor);
-
-			System.out.println("slope: " + slope);
+			System.out.println("SLOPE: " +slope);
 			
 			if (slope == 1 || slope == -1)
 				return true;
@@ -100,8 +99,12 @@ public class Coordinates {
 
 	public boolean isAdjacentTo(Coordinates coor) {
 		
-		if (this.rankC <= coor.rankC + 1 && this.rankC >= coor.rankC - 1) {
-			if (this.fileC <= coor.fileC + 1 && this.fileC >= coor.fileC - 1) {
+		if(this.rankC == coor.rankC){
+			if(this.fileC <= coor.fileC + 1 && this.fileC >= coor.fileC - 1){
+				return true;
+			}
+		}else if(this.fileC == coor.fileC){
+			if (this.rankC <= coor.rankC + 1 && this.rankC >= coor.rankC - 1) {
 				return true;
 			}
 		}
@@ -125,8 +128,4 @@ public class Coordinates {
 		}
 	}
 	
-	public int distanceFrom(Coordinates coor) {
-		return (int) Math.sqrt(Math.pow((coor.fileC - this.fileC), 2)
-				- Math.pow((coor.rankC - this.rankC), 2));
-	}
 }

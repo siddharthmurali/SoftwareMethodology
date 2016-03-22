@@ -1,9 +1,7 @@
 package pieces;
 
-
 import java.util.ArrayList;
 
-import board.BoardSquares;
 import util.Coordinates;
 
 /**
@@ -30,20 +28,20 @@ public abstract class ChessPiece {
 		return this.color + "";
 	}
 	
-	public boolean validMove(){
-		return true;
+	public boolean validMove(Coordinates start, Coordinates end, char spec, boolean path){
+		
+		float dist = (float) Math.sqrt(Math.pow(end.fileC - start.fileC, 2) + Math.pow(end.rankC - start.rankC,2));
+		if(dist <= 7){
+			return true;
+		}else{
+			return false;
+		}
+			
+		
 	}
 
 	public ArrayList<Coordinates> deepestMovesFrom(Coordinates startAddress) {
 		return null;
-	}
-
-	public boolean MoveValid(Coordinates begin, Coordinates end, PieceBoolFalse allBools) {
-		if (begin.distanceFrom(end) <= 7) {
-			return true;
-		} else {
-			return false;
-		}
 	}
 	
 }

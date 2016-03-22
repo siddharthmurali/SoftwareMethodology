@@ -17,7 +17,7 @@ public class BoardSquares {
 	
 	//checks if the space is occupied
 	public boolean isEmpty(){
-		return this.piece != null;
+		return this.piece == null;
 	}
 	
 	
@@ -33,7 +33,6 @@ public class BoardSquares {
 			return this.piece.toString();
 		}
 	}
-
 	
 
 }

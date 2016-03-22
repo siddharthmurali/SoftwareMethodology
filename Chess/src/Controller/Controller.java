@@ -23,7 +23,7 @@ public class Controller {
 		endGame = true;
 	}
 	
-	public void move(char fileOne, char rankOne, char fileTwo, char rankTwo, String toPromote){
+	public void move(char fileOne, char rankOne, char fileTwo, char rankTwo, String toPromote) throws Exception{
 		Coordinates firstCoor;
 		Coordinates secondCoor;
 		

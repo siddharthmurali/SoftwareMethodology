@@ -1,6 +1,5 @@
 package board;
 import pieces.*;
-import util.*;
 
 import java.util.ArrayList;
 
@@ -28,6 +27,10 @@ public class ChessBoard {
 	public boolean isBlackTurn = true;
 
 
+	public static boolean isEqual(Object o1, Object o2) {
+	    return o1 == o2 || (o1 != null && o1.equals(o2));
+	}
+	
 	public ChessBoard(){
 
 		board = new BoardSquares[rank][file];
@@ -93,106 +96,120 @@ public class ChessBoard {
 
 	}
 
-	public void movePiece(Coordinates cellOne, Coordinates cellTwo, String promo) throws BadMoveException{
+	public void movePiece(Coordinates cellOne, Coordinates cellTwo, String promo){
 		BoardSquares begin = this.getFileRank(cellOne);
 		BoardSquares end = this.getFileRank(cellTwo);
+		char type = 0;
 
 		//this.printColors();
 
 		ChessPiece pieceToMove = begin.piece;
 		ChessPiece pieceToKill = end.piece;
+		boolean pathBlocked = this.pieceInPath(cellOne, cellTwo);
 
 		if(begin.equals(end)){
-			System.out.println("Cannot move to same spot");
+			System.out.println();
+			System.out.println("Illegal move, try again");
+			System.out.println();
+			return;
 		}else if(pieceToMove == null){
-			System.out.println("There is no piece to move in that cell");
+			System.out.println("Illegal move, try again");
+			return;
 		}
 		
 		else if(pieceToMove.color == 'b' && getBlackTurn() == false){
-			System.out.println("You cannot move a black piece");
+			System.out.println();
+			System.out.println("Illegal move, try again");
+			System.out.println();
+			return;
 		}
 		else if(pieceToMove.color == 'w' && getBlackTurn() == true){
-			System.out.println("You cannot move a white piece");
+			System.out.println();
+			System.out.println("Illegal move, try again");
+			System.out.println();
+			return;
 		}
 		
 		else if(pieceToKill != null){
+			type = 'c';
 			if(pieceToKill.color == 'b' && getBlackTurn() == true){
-				System.out.println("You cannot kill your own piece");
+				System.out.println();
+				System.out.println("Illegal move, try again");
+				System.out.println();
+				return;
 			}
 			if(pieceToKill.color == 'w' && getBlackTurn() == false){
-				System.out.println("You cannot kill your own piece");
+				System.out.println();
+				System.out.println("Illegal move, try again");
+				System.out.println();
+				return;
 			}
 		}
-		this.move(cellOne, cellTwo);
+		if(checked(begin.piece, cellOne, cellTwo)){
+			System.out.println();
+			System.out.println("King is in Check");
+			System.out.println();
+		}
+			
+		if(pieceToMove.validMove(cellOne, cellTwo, type, pathBlocked)){
+			this.move(cellOne, cellTwo);
+		}	
 	}
 
 
-	private boolean boardHasPieceInPathBetween(Coordinates startAddress, Coordinates endAddress) {
+	private boolean pieceInPath(Coordinates start, Coordinates end) {
 
-		if (false) {
-			System.out.println("boardHasPieceInPathBetween(" + startAddress
-					+ ", " + endAddress + ");");
-			System.out.println("\tstartAddress.rank = " + startAddress.rankC);
-			System.out.println("\tstartAddress.file = " + startAddress.fileC);
-			System.out.println("\tendAddress.rank = " + endAddress.rankC);
-			System.out.println("\tendAddress.file = " + endAddress.fileC);
-		}
 
-		if (startAddress.hasSameFileAs(endAddress)) {
+		if (start.hasSameFileAs(end)) {
 
-			if (startAddress.rankC < endAddress.rankC) {
-				for (int i = startAddress.rankC + 1; i < endAddress.rankC; i++) {
-					if (board[i][startAddress.fileC].isEmpty()) {
+			if (start.rankC < end.rankC) {
+				for (int i = start.rankC + 1; i < end.rankC; i++) {
+					if (board[i][start.fileC].isEmpty()) {
 						return true;
 					}
 				}
 			} else {
-				for (int i = startAddress.rankC - 1; i > endAddress.rankC; i--) {
-					if (board[i][startAddress.fileC].isEmpty()) {
+				for (int i = start.rankC - 1; i > end.rankC; i--) {
+					if (board[i][start.fileC].isEmpty()) {
 						return true;
 					}
 				}
 			}
 
-		} else if (startAddress.hasSameRankAs(endAddress)) {
-			if (startAddress.fileC < endAddress.fileC) {
-				for (int i = startAddress.fileC + 1; i < endAddress.fileC; i++) {
-					if (board[startAddress.rankC][i].isEmpty()) {
+		} else if (start.hasSameRankAs(end)) {
+			if (start.fileC < end.fileC) {
+				for (int i = start.fileC + 1; i < end.fileC; i++) {
+					if (board[start.rankC][i].isEmpty()) {
 						return true;
 					}
 				} 
 			} else {
-				for (int i = startAddress.fileC - 1; i > endAddress.fileC; i--) {
-					if (board[startAddress.rankC][i].isEmpty()) {
+				for (int i = start.fileC - 1; i > end.fileC; i--) {
+					if (board[start.rankC][i].isEmpty()) {
 						return true;
 					}
 				} 
 			}
-		} else if (startAddress.isDiagonalTo(endAddress)) {
+		} else if (start.isDiagonalTo(end)) {
 
-			if (false) {
-				System.out.printf("\n\t\t\t%s isDiagonalTo %s\n",
-						startAddress.toString(), endAddress.toString());
-			}
-
-			if (startAddress.isAdjacentTo(endAddress)) {
-				if (!((BoardSquares) this.squareAt(endAddress)).isEmpty()){
+			if (start.isAdjacentTo(end)) {
+				if (!((BoardSquares) this.squareAt(end)).isEmpty()){
 					return true;
 				} else {
 
 					int changeInFile;
 					int changeInRank;
 
-					int currentRank = startAddress.rankC;
-					int currentFile = startAddress.fileC;
+					int currentRank = start.rankC;
+					int currentFile = start.fileC;
 
-					if (endAddress.fileC > startAddress.fileC) {
+					if (end.fileC > start.fileC) {
 						changeInFile = 1;
 					} else {
 						changeInFile = -1;
 					}
 
-					if (endAddress.rankC > startAddress.rankC) {
+					if (end.rankC > start.rankC) {
 						changeInRank = 1;
 					} else {
 						changeInRank = -1;
@@ -201,21 +218,7 @@ public class ChessBoard {
 					currentRank += changeInRank;
 					currentFile += changeInFile;
 
-					while (currentFile != endAddress.fileC
-							&& currentRank != endAddress.rankC) {
-
-						if (false) {
-							System.out.println("\t\t\tChecking " + currentRank
-									+ " " + currentFile);
-						}
-
-						if (this.board[currentRank][currentFile].isEmpty()) {
-							if (false) {
-								System.out.println("\t\t\tOccupied!" + currentRank
-										+ " " + currentFile);
-							}
-							return true;
-						}
+					while (currentFile != end.fileC && currentRank != end.rankC) {
 
 						currentFile += changeInFile;
 						currentRank += changeInRank;
@@ -227,101 +230,41 @@ public class ChessBoard {
 		}
 		return false;
 	}
-	private Object squareAt(Coordinates endAddress) {
-		// TODO Auto-generated method stub
-		return null;
+	private Object squareAt(Coordinates coor) {
+		return board[coor.rankC][coor.fileC];
 	}
-
-	private boolean Check() {
-		for (int currentRank = 0; currentRank < this.board.length; currentRank++) {
-			for (int currentFile = 0; currentFile < this.board[currentRank].length; currentFile++) {
-				if (this.board[currentRank][currentFile].isEmpty()
-						&& this.board[currentRank][currentFile].piece.isBlack == this.isBlackTurn) {
-					return isPieceCollidingWithKingAt(currentRank, currentFile);
-				}
+	
+	private boolean checked(ChessPiece piece, Coordinates begin, Coordinates end){
+		int currRank = end.rankC;
+		int currFile = end.fileC;
+		BoardSquares diagonalRight = this.board[end.rankC+1][end.fileC+1];
+		BoardSquares diagonalLeft = this.board[end.rankC+1][end.fileC-1];
+		BoardSquares left = this.board[end.rankC][end.fileC-1];
+		BoardSquares right = this.board[end.rankC][end.fileC+1];
+		BoardSquares up = this.board[end.rankC+1][end.fileC];
+		BoardSquares down = this.board[end.rankC-1][end.fileC];
+		
+		if(piece.type.equals("PAWN")){
+			if(diagonalRight.piece == null){
+				return false;
 			}
-		}
-
-		return false;
-	}
-
-	private boolean isPieceCollidingWithKingAt(int currentRank, int currentFile) {
-		ChessPiece cp = this.board[rank][file].piece;
-		Coordinates startAddress = new Coordinates(rank, file);
-		ArrayList<Coordinates> deepestMoves = cp.deepestMovesFrom(startAddress);
-
-		for (int i = 0; i < deepestMoves.size(); i++) {
-			if (this.kingIsFirstCollisionInPathBetween(startAddress, deepestMoves.get(i))) {
+			if(diagonalLeft.piece == null){
+				return false;
+			}
+			if(diagonalRight.piece.type.equals("KING") && diagonalRight.piece.isBlack != getBlackTurn()){
+				return true;
+			}
+			if(diagonalLeft.piece.type.equals("KING") && diagonalRight.piece.isBlack != getBlackTurn()){
 				return true;
 			}
 		}
 		return false;
 	}
 
-	private boolean kingIsFirstCollisionInPathBetween(Coordinates startAddress, Coordinates endAddress) {
-
-		if (startAddress.fileC == endAddress.fileC) {
-			for (int i = startAddress.rankC + 1; i < endAddress.rankC; i++) {
-				if (board[i][startAddress.fileC].isEmpty()) {
-					return board[i][startAddress.fileC].piece instanceof KingPiece;
-				}
-			}
-		} else if (startAddress.rankC == endAddress.rankC) {
-			for (int i = startAddress.fileC + 1; i < endAddress.fileC; i++) {
-				if (board[startAddress.rankC][i].isEmpty()) {
-					return board[startAddress.rankC][i].piece instanceof KingPiece;
-				}
-			}
-		} else if (startAddress.isDiagonalTo(endAddress)) {
-
-			int changeInFile;
-			int changeInRank;
-
-			int currentRank = startAddress.rankC;
-			int currentFile = startAddress.fileC;
-
-			if (endAddress.fileC > startAddress.fileC) {
-				changeInFile = 1;
-			} else {
-				changeInFile = -1;
-			}
-
-			if (endAddress.rankC > startAddress.rankC) {
-				changeInRank = 1;
-			} else {
-				changeInRank = -1;
-			}
-
-			currentRank += changeInRank;
-			currentFile += changeInFile;
-
-			while (currentFile != endAddress.fileC
-					&& currentRank != endAddress.rankC) {
-
-				if (false) {
-					System.out.println("\t\t\tChecking " + currentRank + " "
-							+ currentFile);
-				}
-
-				if (this.board[currentRank][currentFile].isEmpty()) {
-					if (false) {
-						System.out.println("\t\t\tOccupied!" + currentRank
-								+ " " + currentFile);
-					}
-					return this.board[currentRank][currentFile].piece instanceof KingPiece;
-				}
-
-				currentFile += changeInFile;
-				currentRank += changeInRank;
-
-			}
-		}
-		return false;
-	}
-
 	public void move(Coordinates cellOne, Coordinates cellTwo){
-
-		this.board[cellTwo.rankC][cellTwo.fileC].piece = this.board[cellOne.rankC][cellTwo.fileC].piece;
+		
+		this.board[cellOne.rankC][cellOne.fileC].piece.move++;
+		this.board[cellTwo.rankC][cellTwo.fileC].piece = this.board[cellOne.rankC][cellOne.fileC].piece;
 		this.board[cellOne.rankC][cellOne.fileC].piece = null;
 		this.count++;
 		this.isBlackTurn = (count % 2 == 0);
@@ -352,15 +295,5 @@ public class ChessBoard {
 	private BoardSquares getFileRank(Coordinates coor){
 		return board[coor.rankC][coor.fileC];
 	}
-
-	/*public void printColors(){
-		for(int i = 0; i<board.length; i++){
-			for(int j = 0; j<board[i].length; j++){
-				if(board[i][j].piece != null){
-					System.out.println("Board["+i+"]["+j+"] : "+ board[i][j].piece.color);
-				}
-			}
-		}
-	}*/
 
 }
