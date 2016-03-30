@@ -1,0 +1,19 @@
+package app;
+import View.*;
+
+
+import java.io.IOException;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.layout.*;
+import javafx.stage.Stage;
+import View.LoginManager;
+
+public class Album {
+
+	public static void main(String[] args){
+		
+		
+		
+	}
+}

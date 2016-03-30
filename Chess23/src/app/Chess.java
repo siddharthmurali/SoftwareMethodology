@@ -1,6 +1,7 @@
 package app;
 
 import board.*;
+
 import pieces.*;
 import view.view;
 import Controller.Controller;

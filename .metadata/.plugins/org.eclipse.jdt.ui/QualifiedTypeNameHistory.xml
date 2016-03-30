@@ -11,6 +11,10 @@
 <fullyQualifiedTypeName name="songLib.model.Song"/>
 <fullyQualifiedTypeName name="songLib.application.SongLib"/>
 <fullyQualifiedTypeName name="javafx.collections.ObservableList"/>
-<fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="java.util.Collections"/>
+<fullyQualifiedTypeName name="Controller.Controller"/>
+<fullyQualifiedTypeName name="board.ChessBoard"/>
+<fullyQualifiedTypeName name="view.view"/>
+<fullyQualifiedTypeName name="util.Coordinates"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
 </qualifiedTypeNameHistroy>

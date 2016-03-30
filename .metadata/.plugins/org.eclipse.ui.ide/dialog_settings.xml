@@ -5,6 +5,8 @@
 		<item value="false" key="WizardProjectsImportPage.STORE_COPY_PROJECT_ID"/>
 		<item value="false" key="WizardProjectsImportPage.STORE_ARCHIVE_SELECTED"/>
 		<list key="WizardProjectsImportPage.STORE_DIRECTORIES">
+			<item value="/Users/Sid/Documents/SoftMeth/SoftwareMethodology/Chess23"/>
+			<item value="/Users/Sid/Documents/SoftMeth/SoftwareMethodology/ChessXX"/>
 			<item value="/Users/Sid/Documents/SoftMeth/SoftwareMethodology/Chess"/>
 			<item value="/Users/Sid/Downloads/SongLib"/>
 		</list>
