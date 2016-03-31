@@ -14,7 +14,7 @@ public class LoginController {
   
   public void initManager(final LoginManager loginManager) {
     loginButton.setOnAction(new EventHandler<ActionEvent>() {
-      public void handle(ActionEvent event) {
+     public void handle(ActionEvent event) {
         String sessionID = authorize();
         if (sessionID != null) {
           loginManager.authenticated(sessionID);
